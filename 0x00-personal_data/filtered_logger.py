@@ -9,5 +9,5 @@ def filter_datum(fields: List[str],
     """ function filter_datum"""
     for el in fields:
         message = re.sub(r"{}=.+?{}".format(el, separator),
-                        "{}={}{}".format(el, redaction, separator), message)
+                         "{}={}{}".format(el, redaction, separator), message)
     return message
