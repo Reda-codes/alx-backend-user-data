@@ -5,7 +5,7 @@ from typing import List
 
 
 def filter_datum(fields: List[str],
-                 redaction, message, separator):
+                 redaction: str, message: str, separator: str) -> str:
     """ function filter_datum"""
     for el in fields:
         pattern = r"{}=.+?{}".format(el, separator)
