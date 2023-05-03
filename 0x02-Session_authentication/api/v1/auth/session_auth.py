@@ -27,3 +27,10 @@ class SessionAuth(Auth):
         else:
             userId = self.user_id_by_session_id.get(session_id)
             return userId
+
+    def current_user(self, request=None):
+        """current_user  method"""
+        session_cookie = self.session_cookie(request)
+        user_id = self.user_id_for_session_id(session_cookie)
+        user = User.get(user_id)
+        return user
