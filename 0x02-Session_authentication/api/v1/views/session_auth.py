@@ -18,6 +18,8 @@ def create_session(email: str = None, password: str = None) -> str:
         return jsonify({'error': "password missing"}), 400
 
     result = User.search({'email': email})
+    if not result:
+        return jsonify({"error": "no user found for this email"}), 404
     for user in result:
         if user:
             if user.is_valid_password(password):
@@ -30,8 +32,6 @@ def create_session(email: str = None, password: str = None) -> str:
 
             else:
                 return jsonify({"error": "wrong password"}), 401
-
-    return jsonify({"error": "no user found for this email"}), 404
 
 
 @app_views.route('/auth_session/logout',
