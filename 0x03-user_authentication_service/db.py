@@ -4,7 +4,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
-
+from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.exc import InvalidRequestError
 from user import User, Base
 
 
@@ -30,9 +31,22 @@ class DB:
         return self.__session
 
     def add_user(self, email: str, hashed_password: str) -> User:
-        """ Methode add_user to add a new user to the database """
+        """ Method add_user to add a new user to the database """
         user = User(email=email, hashed_password=hashed_password)
         session = self._session
         session.add(user)
         session.commit()
         return user
+
+    def find_user_by(self, **kwargs):
+        """ Method find_user_by to get a user based on a key and a value """
+        key = list(kwargs.items())[0][0]
+        value = list(kwargs.items())[0][1]
+        if key not in dir(User):
+            raise InvalidRequestError
+        session = self._session
+        user = session.query(User).filter(getattr(User, key) == value).first()
+        if user:
+            return user
+        else:
+            raise NoResultFound
