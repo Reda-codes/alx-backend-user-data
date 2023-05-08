@@ -7,6 +7,7 @@ from sqlalchemy.orm.session import Session
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
 from user import User, Base
+from typing import Any, Dict, Optional
 
 
 class DB:
@@ -38,7 +39,7 @@ class DB:
         session.commit()
         return user
 
-    def find_user_by(self, **kwargs):
+    def find_user_by(self, **kwargs: Dict[str, Any]) -> Optional[User]:
         """ Method find_user_by to get a user based on a key and a value """
         key = list(kwargs.items())[0][0]
         value = list(kwargs.items())[0][1]
@@ -51,7 +52,9 @@ class DB:
         else:
             raise NoResultFound
 
-    def update_user(self, user_id, **kwargs):
+    def update_user(self,
+                    user_id: str,
+                    **kwargso: Dict[str, Any]) -> Optional[None]:
         """ Method update_user to Update an existing user """
         session = self._session
         user = session.query(User).filter(User.id == user_id)
