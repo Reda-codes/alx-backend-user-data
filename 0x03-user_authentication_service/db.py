@@ -50,3 +50,15 @@ class DB:
             return user
         else:
             raise NoResultFound
+
+    def update_user(self, user_id, **kwargs):
+        """ Method update_user to Update an existing user """
+        session = self._session
+        user = session.query(User).filter(User.id == user_id)
+        if user:
+            for key, value in kwargs.items():
+                if key in dir(User):
+                    user.update({key: value})
+                else:
+                    raise ValueError
+        return None
