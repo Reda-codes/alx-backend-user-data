@@ -58,11 +58,11 @@ class DB:
                     **kwargs: Dict[str, Any]) -> Optional[None]:
         """ Method update_user to Update an existing user """
         session = self._session
-        user = session.query(User).filter(User.id == user_id)
+        user = self.find_user_by(id=user_id)
         if user:
             for key, value in kwargs.items():
                 if key in dir(User):
-                    user.update({key: value})
+                    setattr(user, key, value)
                     session.commit()
                 else:
                     raise ValueError
