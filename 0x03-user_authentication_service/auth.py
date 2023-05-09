@@ -9,7 +9,7 @@ from user import User
 
 def _hash_password(password: str) -> bytes:
     """ Method that takes string arguments and returns bytes """
-    salt = b'$2b$12$eUDdeuBtrD41c8dXvzh95eh'
+    salt = bcrypt.gensalt()
     return bcrypt.hashpw(password.encode(), salt)
 
 class Auth:
@@ -21,4 +21,4 @@ class Auth:
 
     def register_user(self, email: str, password: str) -> User:
         """ Method to regester a new user """
-
+        pass
