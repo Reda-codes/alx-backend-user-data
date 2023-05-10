@@ -40,4 +40,3 @@ class Auth:
                 return False
         except (NoResultFound, InvalidRequestError) as e:
             return False
-        
