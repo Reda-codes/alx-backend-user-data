@@ -48,11 +48,19 @@ class Auth:
             return False
 
     def create_session(self, email: str) -> str:
-        """ method to create a session ID """
+        """ Method to create a session ID """
         try:
             userID = self._db.find_user_by(email=email).id
             sessionID = _generate_uuid()
             self._db.update_user(userID, session_id=sessionID)
             return self._db.find_user_by(email=email).session_id
         except Exception as e:
+            return None
+
+    def get_user_from_session_id(self, session_id: str) -> User:
+        """ Method to gets a User from a session ID """
+        try:
+            user = self._db.find_user_by(session_id=session_id)
+            return user
+        except (NoResultFound, InvalidRequestError) as e:
             return None
