@@ -17,6 +17,7 @@ def root_path():
 
 @app.route('/users', methods=['POST'], strict_slashes=False)
 def users():
+    """ users POST request to create a new user """
     email = request.form.get('email')
     password = request.form.get('password')
     try:
