@@ -48,11 +48,11 @@ def login():
 def logout():
     """ sessions DELETE to logout a user """
     sessionID = request.cookies.get('session_id')
-    try:
-        user = AUTH.get_user_from_session_id(session_id=sessionID)
+    user = AUTH.get_user_from_session_id(session_id=sessionID)
+    if user:
         AUTH.destroy_session(user.id)
         return redirect("/")
-    except (Exception, NoResultFound, InvalidRequestError) as e:
+    else:
         return "Forbidden", 403
 
 
