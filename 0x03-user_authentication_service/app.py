@@ -69,6 +69,7 @@ def profile():
 
 @app.route('/reset_password', methods=['POST'], strict_slashes=False)
 def get_reset_password_token():
+    """ Route to get the reset password token """
     email = request.form.get('email')
     try:
         token = AUTH.get_reset_password_token(email)
@@ -80,6 +81,7 @@ def get_reset_password_token():
 
 @app.route('/reset_password', methods=['PUT'], strict_slashes=False)
 def update_password():
+    """ Route to update password """
     email = request.form.get('email')
     reset_token = request.form.get('reset_token')
     new_password = request.form.get('new_password')
