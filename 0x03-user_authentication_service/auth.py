@@ -1,7 +1,5 @@
 #!/usr/bin/env python
-"""
-auth module
-"""
+""" Auth module """
 import bcrypt
 from db import DB
 from user import User
@@ -11,6 +9,7 @@ def _hash_password(password: str) -> bytes:
     """ Method that takes string arguments and returns bytes """
     salt = bcrypt.gensalt()
     return bcrypt.hashpw(password.encode(), salt)
+
 
 class Auth:
     """Auth class to interact with the authentication database.
