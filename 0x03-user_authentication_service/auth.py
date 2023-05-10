@@ -37,5 +37,6 @@ class Auth:
                 return True
             else:
                 return False
-        except NoResultFound:
+        except (NoResultFound, InvalidRequestError) as e:
             return False
+        
