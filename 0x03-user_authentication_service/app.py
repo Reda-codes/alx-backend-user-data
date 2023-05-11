@@ -60,7 +60,7 @@ def logout():
 def profile():
     """ Route to to find a user"""
     session_id = request.cookies.get('session_id')
-    user = AUTH.get_user_from_session_id(session_id=session_id)
+    user = AUTH.get_user_from_session_id(session_id)
     if user:
         return jsonify({"email": "{}".format(user.email)}), 200
     else:

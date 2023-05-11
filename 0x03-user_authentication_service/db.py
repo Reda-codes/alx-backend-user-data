@@ -44,6 +44,8 @@ class DB:
         """ Method find_user_by to get a user based on a key and a value """
         key = list(kwargs.items())[0][0]
         value = list(kwargs.items())[0][1]
+        if not key and not value:
+            raise InvalidRequestError
         if key not in dir(User):
             raise InvalidRequestError
         session = self._session
