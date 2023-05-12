@@ -43,7 +43,10 @@ def profile_unlogged() -> None:
 
 def profile_logged(session_id: str) -> None:
     """ logged profile access """
-    
+    path = "{}/profile".format(url)
+    response = requests.get(path)
+    assert response.status_code == 200
+    assert response.json() == {"email": email}
 
 
 def log_out(session_id: str) -> None:
@@ -77,5 +80,3 @@ if __name__ == "__main__":
     # reset_token = reset_password_token(EMAIL)
     # update_password(EMAIL, reset_token, NEW_PASSWD)
     # log_in(EMAIL, NEW_PASSWD)
-    log_in(EMAIL, PASSWD)
-
