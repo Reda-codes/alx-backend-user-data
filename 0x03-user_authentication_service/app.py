@@ -48,8 +48,8 @@ def login():
 def logout():
     """ sessions DELETE to logout a user """
     session_id = request.cookies.get('session_id')
-    user = AUTH.get_user_from_session_id(session_id=session_id)
-    if user:
+    user = AUTH.get_user_from_session_id(session_id)
+    if user and session_id:
         AUTH.destroy_session(user.id)
         return redirect('/')
     else:
