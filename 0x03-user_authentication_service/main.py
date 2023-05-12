@@ -32,6 +32,7 @@ def log_in(email: str, password: str) -> str:
     response = requests.post(path, data=data)
     assert response.status_code == 200
     assert response.json() == {"email": email, "message": "logged in"}
+    return response.cookies["session_id"]
 
 
 def profile_unlogged() -> None:
@@ -44,14 +45,15 @@ def profile_unlogged() -> None:
 def profile_logged(session_id: str) -> None:
     """ logged profile access """
     path = "{}/profile".format(url)
-    response = requests.get(path)
+    response = requests.get(path, cookies={"session_id": session_id})
     assert response.status_code == 200
-    assert response.json() == {"email": email}
 
 
 def log_out(session_id: str) -> None:
     """ loggin out a user """
-    pass
+    path = "{}/sessions".format(url)
+    response = requests.delete(path, cookies={"session_id": session_id})
+    assert response.status_code == 200
 
 
 def reset_password_token(email: str) -> str:
@@ -74,9 +76,9 @@ if __name__ == "__main__":
     register_user(EMAIL, PASSWD)
     log_in_wrong_password(EMAIL, NEW_PASSWD)
     profile_unlogged()
-    # session_id = log_in(EMAIL, PASSWD)
-    # profile_logged(session_id)
-    # log_out(session_id)
+    session_id = log_in(EMAIL, PASSWD)
+    profile_logged(session_id)
+    log_out(session_id)
     # reset_token = reset_password_token(EMAIL)
     # update_password(EMAIL, reset_token, NEW_PASSWD)
     # log_in(EMAIL, NEW_PASSWD)
