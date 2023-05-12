@@ -40,7 +40,7 @@ class DB:
         session.commit()
         return user
 
-    def find_user_by(self, **kwargs: Dict[str, Any]) -> Optional[User]:
+    def find_user_by(self, **kwargs: Dict[str, Any]) -> User:
         """ Method find_user_by to get a user based on a key and a value """
         key = list(kwargs.items())[0][0]
         value = list(kwargs.items())[0][1]
@@ -57,7 +57,7 @@ class DB:
 
     def update_user(self,
                     user_id: str,
-                    **kwargs: Dict[str, Any]) -> Optional[None]:
+                    **kwargs: Dict[str, Any]) -> None:
         """ Method update_user to Update an existing user """
         session = self._session
         user = self.find_user_by(id=user_id)

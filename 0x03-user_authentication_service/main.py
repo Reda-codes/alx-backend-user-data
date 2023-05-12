@@ -38,7 +38,6 @@ def profile_unlogged() -> None:
     """ unlogged profile access """
     path = "{}/profile".format(url)
     response = requests.get(path)
-    print(response)
     assert response.status_code == 403
 
 
