@@ -56,7 +56,7 @@ class DB:
             raise NoResultFound
 
     def update_user(self,
-                    user_id: str,
+                    user_id: int,
                     **kwargs) -> None:
         """ Method update_user to Update an existing user """
         session = self._session
