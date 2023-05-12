@@ -39,9 +39,7 @@ class Auth:
         """ Method to check for valid login credentials """
         try:
             user = self._db.find_user_by(email=email)
-            salt = b'$2b$12$eUDdeuBtrD41c8dXvzh95eh'
-            hashed_password = bcrypt.hashpw(password.encode(), salt)
-            if user.hashed_password == hashed_password:
+            if bcrypt.checkpw(password.encode('utf8'), user.hashed_password):
                 return True
             else:
                 return False
